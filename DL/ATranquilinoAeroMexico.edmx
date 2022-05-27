@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ATranquilinoAeroMexicoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Pasajero">
+          <Key>
+            <PropertyRef Name="IdPasajero" />
+          </Key>
+          <Property Name="IdPasajero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vuelo">
+          <Key>
+            <PropertyRef Name="VueloNumero" />
+          </Key>
+          <Property Name="VueloNumero" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Origen" Type="char" MaxLength="2" />
+          <Property Name="Destino" Type="char" MaxLength="2" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="FechaSalida" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VueloPasajero">
+          <Key>
+            <PropertyRef Name="IdVueloPasajero" />
+          </Key>
+          <Property Name="IdVueloPasajero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroVuelo" Type="varchar" MaxLength="4" />
+          <Property Name="IdPasajero" Type="int" />
+        </EntityType>
+        <Association Name="FK__VueloPasa__IdPas__1920BF5C">
+          <End Role="Pasajero" Type="Self.Pasajero" Multiplicity="0..1" />
+          <End Role="VueloPasajero" Type="Self.VueloPasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pasajero">
+              <PropertyRef Name="IdPasajero" />
+            </Principal>
+            <Dependent Role="VueloPasajero">
+              <PropertyRef Name="IdPasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VueloPasa__Numer__182C9B23">
+          <End Role="Vuelo" Type="Self.Vuelo" Multiplicity="0..1" />
+          <End Role="VueloPasajero" Type="Self.VueloPasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vuelo">
+              <PropertyRef Name="VueloNumero" />
+            </Principal>
+            <Dependent Role="VueloPasajero">
+              <PropertyRef Name="NumeroVuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="PasajeroAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombres" Type="varchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PasajeroGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReservacionAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroVuelo" Type="varchar" Mode="In" />
+          <Parameter Name="IdPasajero" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VueloGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FechaInicio" Type="varchar" Mode="In" />
+          <Parameter Name="FechaFin" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VueloGetByIdPasajero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPasajero" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VueloGetByIdPasajero2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPasajero" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VueloGetNoAsignado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPasajero" Type="int" Mode="In" />
+        </Function>
+        <Function Name="VueloReservacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VueloNumero" Type="varchar" Mode="In" />
+          <Parameter Name="IdPasajero" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ATranquilinoAeroMexicoModelStoreContainer">
+          <EntitySet Name="Pasajero" EntityType="Self.Pasajero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vuelo" EntityType="Self.Vuelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VueloPasajero" EntityType="Self.VueloPasajero" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__VueloPasa__IdPas__1920BF5C" Association="Self.FK__VueloPasa__IdPas__1920BF5C">
+            <End Role="Pasajero" EntitySet="Pasajero" />
+            <End Role="VueloPasajero" EntitySet="VueloPasajero" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VueloPasa__Numer__182C9B23" Association="Self.FK__VueloPasa__Numer__182C9B23">
+            <End Role="Vuelo" EntitySet="Vuelo" />
+            <End Role="VueloPasajero" EntitySet="VueloPasajero" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ATranquilinoAeroMexicoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Pasajero">
+          <Key>
+            <PropertyRef Name="IdPasajero" />
+          </Key>
+          <Property Name="IdPasajero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="VueloPasajeroes" Relationship="ATranquilinoAeroMexicoModel.FK__VueloPasa__IdPas__1920BF5C" FromRole="Pasajero" ToRole="VueloPasajero" />
+        </EntityType>
+        <EntityType Name="Vuelo">
+          <Key>
+            <PropertyRef Name="VueloNumero" />
+          </Key>
+          <Property Name="VueloNumero" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Origen" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Destino" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="FechaSalida" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VueloPasajeroes" Relationship="ATranquilinoAeroMexicoModel.FK__VueloPasa__Numer__182C9B23" FromRole="Vuelo" ToRole="VueloPasajero" />
+        </EntityType>
+        <EntityContainer Name="ATranquilinoAeroMexicoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pasajeroes" EntityType="Self.Pasajero" />
+          <EntitySet Name="Vueloes" EntityType="Self.Vuelo" />
+          <FunctionImport Name="VueloGetAll" ReturnType="Collection(ATranquilinoAeroMexicoModel.VueloGetAll_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="VueloPasajeroes" EntityType="ATranquilinoAeroMexicoModel.VueloPasajero" />
+          <AssociationSet Name="FK__VueloPasa__IdPas__1920BF5C" Association="ATranquilinoAeroMexicoModel.FK__VueloPasa__IdPas__1920BF5C">
+            <End Role="Pasajero" EntitySet="Pasajeroes" />
+            <End Role="VueloPasajero" EntitySet="VueloPasajeroes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VueloPasa__Numer__182C9B23" Association="ATranquilinoAeroMexicoModel.FK__VueloPasa__Numer__182C9B23">
+            <End Role="Vuelo" EntitySet="Vueloes" />
+            <End Role="VueloPasajero" EntitySet="VueloPasajeroes" />
+          </AssociationSet>
+          <FunctionImport Name="PasajeroGetAll" ReturnType="Collection(ATranquilinoAeroMexicoModel.PasajeroGetAll_Result)" />
+          <FunctionImport Name="VueloReservacion">
+            <Parameter Name="VueloNumero" Mode="In" Type="String" />
+            <Parameter Name="IdPasajero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VueloGetByIdPasajero" ReturnType="Collection(ATranquilinoAeroMexicoModel.VueloGetByIdPasajero_Result)">
+          <Parameter Name="IdPasajero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VueloGetByIdPasajero2" ReturnType="Collection(ATranquilinoAeroMexicoModel.VueloGetByIdPasajero2_Result)">
+          <Parameter Name="IdPasajero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VueloGetNoAsignado" ReturnType="Collection(ATranquilinoAeroMexicoModel.VueloGetNoAsignado_Result)">
+          <Parameter Name="IdPasajero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReservacionAdd">
+            <Parameter Name="NumeroVuelo" Mode="In" Type="String" />
+            <Parameter Name="IdPasajero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PasajeroAdd">
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="VueloGetAll_Result">
+          <Property Type="String" Name="VueloNumero" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="Origen" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Destino" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" />
+          <Property Type="DateTime" Name="FechaSalida" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="VueloPasajero">
+          <Key>
+            <PropertyRef Name="IdVueloPasajero" />
+          </Key>
+          <Property Name="IdVueloPasajero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroVuelo" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="IdPasajero" Type="Int32" />
+          <NavigationProperty Name="Pasajero" Relationship="ATranquilinoAeroMexicoModel.FK__VueloPasa__IdPas__1920BF5C" FromRole="VueloPasajero" ToRole="Pasajero" />
+          <NavigationProperty Name="Vuelo" Relationship="ATranquilinoAeroMexicoModel.FK__VueloPasa__Numer__182C9B23" FromRole="VueloPasajero" ToRole="Vuelo" />
+        </EntityType>
+        <Association Name="FK__VueloPasa__IdPas__1920BF5C">
+          <End Type="ATranquilinoAeroMexicoModel.Pasajero" Role="Pasajero" Multiplicity="0..1" />
+          <End Type="ATranquilinoAeroMexicoModel.VueloPasajero" Role="VueloPasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pasajero">
+              <PropertyRef Name="IdPasajero" />
+            </Principal>
+            <Dependent Role="VueloPasajero">
+              <PropertyRef Name="IdPasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VueloPasa__Numer__182C9B23">
+          <End Type="ATranquilinoAeroMexicoModel.Vuelo" Role="Vuelo" Multiplicity="0..1" />
+          <End Type="ATranquilinoAeroMexicoModel.VueloPasajero" Role="VueloPasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vuelo">
+              <PropertyRef Name="VueloNumero" />
+            </Principal>
+            <Dependent Role="VueloPasajero">
+              <PropertyRef Name="NumeroVuelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PasajeroGetAll_Result">
+          <Property Type="Int32" Name="IdPasajero" Nullable="false" />
+          <Property Type="String" Name="Nombres" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellidos" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="VueloGetByIdPasajero_Result">
+          <Property Type="Int32" Name="IdVueloPasajero" Nullable="false" />
+          <Property Type="String" Name="NumeroVuelo" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="IdPasajero" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VueloGetByIdPasajero2_Result">
+          <Property Type="Int32" Name="IdVueloPasajero" Nullable="false" />
+          <Property Type="String" Name="VueloNumero" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="Origen" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Destino" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" />
+          <Property Type="DateTime" Name="FechaSalida" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="VueloGetNoAsignado_Result">
+          <Property Type="String" Name="VueloNumero" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="Origen" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Destino" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="FechaSalida" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ATranquilinoAeroMexicoModelStoreContainer" CdmEntityContainer="ATranquilinoAeroMexicoEntities">
+          <EntitySetMapping Name="Pasajeroes">
+            <EntityTypeMapping TypeName="ATranquilinoAeroMexicoModel.Pasajero">
+              <MappingFragment StoreEntitySet="Pasajero">
+                <ScalarProperty Name="IdPasajero" ColumnName="IdPasajero" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vueloes">
+            <EntityTypeMapping TypeName="ATranquilinoAeroMexicoModel.Vuelo">
+              <MappingFragment StoreEntitySet="Vuelo">
+                <ScalarProperty Name="VueloNumero" ColumnName="VueloNumero" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VueloGetAll" FunctionName="ATranquilinoAeroMexicoModel.Store.VueloGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoAeroMexicoModel.VueloGetAll_Result">
+                <ScalarProperty Name="VueloNumero" ColumnName="VueloNumero" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="VueloPasajeroes">
+            <EntityTypeMapping TypeName="ATranquilinoAeroMexicoModel.VueloPasajero">
+              <MappingFragment StoreEntitySet="VueloPasajero">
+                <ScalarProperty Name="IdPasajero" ColumnName="IdPasajero" />
+                <ScalarProperty Name="NumeroVuelo" ColumnName="NumeroVuelo" />
+                <ScalarProperty Name="IdVueloPasajero" ColumnName="IdVueloPasajero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PasajeroGetAll" FunctionName="ATranquilinoAeroMexicoModel.Store.PasajeroGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoAeroMexicoModel.PasajeroGetAll_Result">
+                <ScalarProperty Name="IdPasajero" ColumnName="IdPasajero" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VueloReservacion" FunctionName="ATranquilinoAeroMexicoModel.Store.VueloReservacion" />
+          <FunctionImportMapping FunctionImportName="VueloGetByIdPasajero" FunctionName="ATranquilinoAeroMexicoModel.Store.VueloGetByIdPasajero">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoAeroMexicoModel.VueloGetByIdPasajero_Result">
+                <ScalarProperty Name="IdVueloPasajero" ColumnName="IdVueloPasajero" />
+                <ScalarProperty Name="NumeroVuelo" ColumnName="NumeroVuelo" />
+                <ScalarProperty Name="IdPasajero" ColumnName="IdPasajero" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VueloGetByIdPasajero2" FunctionName="ATranquilinoAeroMexicoModel.Store.VueloGetByIdPasajero2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoAeroMexicoModel.VueloGetByIdPasajero2_Result">
+                <ScalarProperty Name="IdVueloPasajero" ColumnName="IdVueloPasajero" />
+                <ScalarProperty Name="VueloNumero" ColumnName="VueloNumero" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VueloGetNoAsignado" FunctionName="ATranquilinoAeroMexicoModel.Store.VueloGetNoAsignado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoAeroMexicoModel.VueloGetNoAsignado_Result">
+                <ScalarProperty Name="VueloNumero" ColumnName="VueloNumero" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReservacionAdd" FunctionName="ATranquilinoAeroMexicoModel.Store.ReservacionAdd" />
+          <FunctionImportMapping FunctionImportName="PasajeroAdd" FunctionName="ATranquilinoAeroMexicoModel.Store.PasajeroAdd" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

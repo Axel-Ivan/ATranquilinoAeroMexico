@@ -1,0 +1,58 @@
+﻿@model ML.VueloPasajero
+@{
+    ViewBag.Title = "PasajeroGetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Reservar Vuelos</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "+" para añadir un vuelo a un pasajero</h5>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Pasajero.Pasajeros.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Asignar vuelo</td>
+                            <td class="form-group" style="display: none;">IdPasajero</td>
+                            <td>Nombre</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Pasajero pasajero in Model.Pasajero.Pasajeros)
+                        {
+                            <tr class="text-center">
+                                <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("AsignarVuelo", "Reservacion", new { IdPasajero = pasajero.IdPasajero })"></a></td>
+                                <td class="form-group" style="display: none;">@pasajero.IdPasajero</td>
+                                <td>@pasajero.Nombres @pasajero.Apellidos</td>                               
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron pasajeros disponibles!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

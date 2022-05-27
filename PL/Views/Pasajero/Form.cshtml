@@ -1,0 +1,61 @@
+﻿@model ML.Pasajero
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Añadir Pasajero</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-left">Llene los campos con la información del pasajero que desea registrar de acuerdo a lo que se indica.</h5>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Pasajero", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" style="display: none;">
+                            @Html.LabelFor(model => model.IdPasajero, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.IdPasajero, new { @class = "hidden form-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Nombres)
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-alarm"></i></span>
+                            @Html.TextBoxFor(model => model.Nombres, new { @class = "form-control", @autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Nombres)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Apellidos)
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                            @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Apellidos)
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-1">
+                        <input type="submit" value="Guardar" class="btn btn-success">
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

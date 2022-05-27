@@ -1,0 +1,102 @@
+﻿@model ML.VueloPasajero
+@{
+    ViewBag.Title = "AsignarVuelo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Vuelos-Pasajero</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h6 class="text-center">Selecione el boton "+" para añadir un vuelo al pasajero </h6>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" style="display: none;">
+                @Html.LabelFor(model => model.IdVueloPasajero, new { @class = "hidden" })
+                @Html.TextBoxFor(model => model.IdVueloPasajero, new { @class = "hidden form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Pasajero.IdPasajero, new { @class = "hidden form-control" })
+            @Html.TextBoxFor(model => model.Pasajero.IdPasajero, new { @class = "hidden form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr class="text-left">
+                        <td><a class="btn btn-primary glyphicon glyphicon-blackboard" href="@Url.Action("VuelosNoAsignados", "Reservacion", new { IdPasajero = Model.Pasajero.IdPasajero})"></a></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.VueloPasajeros.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Vuelos</h4>
+                <hr />
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td class="form-group" style="display: none;">IdVuelo</td>
+                            <td>Origen</td>
+                            <td>Destino</td>
+                            <td>Fecha de Inicio</td>
+                            <td>Fecha de Fin</td>
+                            <td>Fecha de Salida</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (ML.VueloPasajero vuelo in Model.VueloPasajeros)
+                        {
+                            <tr class="text-center">
+                                <td class="form-group" style="display: none;">@vuelo.Vuelo.VueloNumero</td>
+                                <td>@vuelo.Vuelo.Origen</td>
+                                <td>@vuelo.Vuelo.Destino</td>
+                                <td>@vuelo.Vuelo.FechaInicio</td>
+                                <td>@vuelo.Vuelo.FechaFin</td>
+                                <td>@vuelo.Vuelo.FechaSalida</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de vuelos para este pasajero!!!
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
